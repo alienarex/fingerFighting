@@ -8,9 +8,10 @@ function start() {
         setBackgroundImagePage();
 
     }
-    debugger
     let texts = document.getElementById('text-type');
+    // let testar2 = texts.options[texts.selectedIndex].text;
     // let op = document.getElementById('text-type').options;
+    // debugger
     texts.onchange = getChosenText;
 
 
@@ -24,14 +25,20 @@ function getTextsFromJson() {
 
     let urlJsonTexts = 'JSON/texts.json';
     debugger
-    var client = new HttpClient();
+
     if (sessionStorage.texts == null) {
 
+        var client = new HttpClient();
         client.get(urlJsonTexts, function (response) {
+            debugger
             sessionStorage.texts = response;
+            createDropMenuChooseTexts();
         });
+
+    } else {
+
+        createDropMenuChooseTexts();
     }
-    createDropMenuChooseTexts();
 }
 
 /**
@@ -54,7 +61,7 @@ function createDropMenuChooseTexts() {
 
     let texts = JSON.parse(sessionStorage.texts);
     let chooseText = document.getElementById('choose-text-id');
-    let setOptionValue = 1;
+    let setOptionValue = 0;
     debugger
     let label = document.createElement('LABEL');
     label.setAttribute('for', 'text-type');
@@ -84,18 +91,24 @@ function createInputElement() {
     let inputElement = document.createElement('INPUT');
     inputElement.setAttribute('id', 'text-value');
     inputElement.setAttribute('type', 'text');
-    inputElement.addEventListener('keyup', inputEvent => {
-        getInputValue(inputEvent);
-    });
+    //
+    // inputElement.addEventListener('keyup', inputEvent => {
+    //     getInputValue(inputEvent);
+    // });
+
     form.appendChild(inputElement);
 
 }
 
 function getChosenText(e) { // TODO Check if works when drop menu created
+    debugger
+
+    let test1 = document.getElementById('text-type');
+    let selectedIndex = test1.options[test1.selectedIndex].value; // returns index of selected
 
     let texts = JSON.parse(sessionStorage.texts);
-    let test = texts[e.target.options.selectedIndex];
-    console.log(test);
+    let selectedObject = texts[selectedIndex];
+
     //
     // checkText = getTestString();
     // textHeader, textWriter;
@@ -107,38 +120,57 @@ function getChosenText(e) { // TODO Check if works when drop menu created
     // textWriter.classList.add('text-writer');
     // document.getElementById('text-content').appendChild(textWriter);
 
-    console.log(e.target.options.selectedIndex);
 
-    for (let i = 0; i < test.text.length; i++) {
+    for (let i = 0; i < selectedObject.text.length; i++) {
         let elementSpan = document.createElement('SPAN');
 
-        elementSpan.innerText = test.text[i];
+        elementSpan.innerText = selectedObject.text[i];
         document.getElementById('text-to-check-against').appendChild(elementSpan);
     }
-
-    debugger
+    startFingerFight(selectedObject.text);
+    return selectedObject.text;
 
 }
 
-function getInputValue(keyUpEvent) {
-    // TODO How to ??
+
+function startFingerFight(controlString) {
+
+    let inputElement = document.getElementById('text-value');
     let typedString = '';
-    let controlString = document.getElementById('text-to-check-against').innerText;
-    let writtenChars = 0;
+    let writtenChars = 0, countWordsInControlString = 0, currentWords;
 
 
-    debugger;
-    // typedString += keyUpEvent.key;
-    if (controlString[writtenChars] === keyUpEvent.key) {
-        let test = controlString[writtenChars];
-        let fuck = +document.getElementById('text-value').value;
+    function currentWordWritten() {
+
+        document.getElementById('text-value').value = typedString;// under DEV. Create some kind of substring to print in textbox
+
+    }
+
+    function removeWrittenWordFromTextbox() {
+
+    }
+
+    function getInputValue(keyUpEvent) {
+        // TODO How to ??
+
+        typedString += keyUpEvent.key;
+        debugger
         document.getElementById('text-value').value = typedString;
+
+        if (controlString[writtenChars] === ' ') {
+
+            typedString = "";
+        }
+
+        if (controlString[writtenChars] === keyUpEvent.key) {
+            console.log('Funkish!!');
+
+        }
+        writtenChars++;
     }
-    if (controlString[writtenChars] === " ") {
-        document.getElementById('text-value').value = null;
-        typedString = '';
-    }
-    writtenChars++;
+
+
+    inputElement.addEventListener('keyup', getInputValue);
 
 }
 
