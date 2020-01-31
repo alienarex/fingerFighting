@@ -24,13 +24,12 @@ function start() {
 function getTextsFromJson() {
 
     let urlJsonTexts = 'JSON/texts.json';
-    debugger
 
     if (sessionStorage.texts == null) {
 
         var client = new HttpClient();
         client.get(urlJsonTexts, function (response) {
-            debugger
+
             sessionStorage.texts = response;
             createDropMenuChooseTexts();
         });
@@ -62,7 +61,7 @@ function createDropMenuChooseTexts() {
     let texts = JSON.parse(sessionStorage.texts);
     let chooseText = document.getElementById('choose-text-id');
     let setOptionValue = 0;
-    debugger
+
     let label = document.createElement('LABEL');
     label.setAttribute('for', 'text-type');
     label.textContent = 'Choose Text:';
@@ -101,35 +100,41 @@ function createInputElement() {
 }
 
 function getChosenText(e) { // TODO Check if works when drop menu created
-    debugger
-
-    let test1 = document.getElementById('text-type');
-    let selectedIndex = test1.options[test1.selectedIndex].value; // returns index of selected
 
     let texts = JSON.parse(sessionStorage.texts);
+
+    let test1 = document.getElementById('text-type'),
+        textContent = document.getElementById('text-content-id'),//<div> element
+        selectedIndex = test1.options[test1.selectedIndex].value, // returns index of selected
+        contentTitle, contentAuthor;
+
     let selectedObject = texts[selectedIndex];
 
-    //
-    // checkText = getTestString();
-    // textHeader, textWriter;
-    //
-    // textHeader = document.createElement('H6');
-    // textHeader.classList.add('text-header');
-    // document.getElementById('text-content').appendChild(textHeader);
-    // textWriter = document.createElement('P');
-    // textWriter.classList.add('text-writer');
-    // document.getElementById('text-content').appendChild(textWriter);
+    let paragraph = document.createElement('P');
+
+    paragraph.classList.add('text-content');
+
+    contentTitle = document.createElement('H3');
+    contentTitle.classList.add('text-content-title');
+    contentTitle.innerText = selectedObject.title;
+
+    paragraph.appendChild(contentTitle);
+
+    contentAuthor = document.createElement('P');
+    contentAuthor.classList.add('text-content-author');
+    contentAuthor.innerText = "Författare: " + selectedObject.author;
+    paragraph.appendChild(contentAuthor);
 
 
     for (let i = 0; i < selectedObject.text.length; i++) {
         let elementSpan = document.createElement('SPAN');
 
         elementSpan.innerText = selectedObject.text[i];
-        document.getElementById('text-to-check-against').appendChild(elementSpan);
+        paragraph.appendChild(elementSpan);
     }
-    startFingerFight(selectedObject.text);
-    return selectedObject.text;
 
+    textContent.appendChild(paragraph);
+    startFingerFight(selectedObject.text);
 }
 
 
@@ -154,7 +159,7 @@ function startFingerFight(controlString) {
         // TODO How to ??
 
         typedString += keyUpEvent.key;
-        debugger
+
         document.getElementById('text-value').value = typedString;
 
         if (controlString[writtenChars] === ' ') {

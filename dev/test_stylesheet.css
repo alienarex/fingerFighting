@@ -119,6 +119,18 @@ fieldset {
     padding: 0;
 }
 
+.wrapper div.section.text-content p h3 {
+    text-align: center;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+.wrapper div.section.text-content p.text-content-author {
+    text-align: center;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
 .wrapper div.section.text-content p span.done {
     background-color: #f0f;
 }
