@@ -144,7 +144,7 @@ fieldset {
     flex-wrap: nowrap;
 }
 
-.wrapper div.section.type-here form input {
+.wrapper div.section.type-here form input#text-value {
     align-self: center;
     width: 150px;
     margin: 0 auto;
@@ -153,6 +153,19 @@ fieldset {
     outline: none;
 }
 
+.wrapper div.section.type-here form. wrapper-game-buttons {
+
+    height: 100px;
+    width: 100px;
+
+}
+
+.wrapper div.section.type-here form .wrapper-game-buttons input {
+    border-radius: 0.5em;
+    height: 25px;
+    widht: 25px;
+    padding: 0;
+}
 
 #page-container #content-wrap #main-footer {
     border-top: 2px solid grey;

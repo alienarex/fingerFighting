@@ -14,8 +14,9 @@ function start() {
     // debugger
     texts.onchange = getChosenText;
 
-
+    f();
 }
+
 
 /**
  * ref1 : https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
@@ -90,12 +91,36 @@ function createInputElement() {
     let inputElement = document.createElement('INPUT');
     inputElement.setAttribute('id', 'text-value');
     inputElement.setAttribute('type', 'text');
-    //
-    // inputElement.addEventListener('keyup', inputEvent => {
-    //     getInputValue(inputEvent);
-    // });
 
     form.appendChild(inputElement);
+    let div = document.createElement('DIV');
+    div.classList.add('wrapper-game-buttons');
+
+
+    //TODO refactor so that image switches when clicked!
+    let inputBtnStart = document.createElement('INPUT');
+    inputBtnStart.setAttribute('type', 'image');
+    inputBtnStart.setAttribute('id', 'start-button');
+    inputBtnStart.setAttribute('src', '../img/start-button.svg');
+    inputBtnStart.setAttribute('alt', 'start'); // TODO use data-attribute to change values  
+
+
+    div.appendChild(inputBtnStart);
+
+    let inputBtnStop = document.createElement('INPUT');
+    inputBtnStop.setAttribute('type', 'image');
+    inputBtnStop.setAttribute('id', 'stop-button');
+    inputBtnStop.setAttribute('src', '../img/stop-button.svg');
+    inputBtnStop.setAttribute('alt', 'stop');
+
+    div.appendChild(inputBtnStop);
+    form.appendChild(div);
+
+    // <div class="wrapper-game-buttons">
+//         <input class="game-button" id="start-button" type="image" src="../img/start-button.svg" alt="start"/>
+//         <input class=game-button" id="stop-button" type="image" src="../img/stop-button.svg" alt="stop"/>
+//     </div>
+
 
 }
 
