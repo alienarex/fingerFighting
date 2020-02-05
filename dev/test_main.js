@@ -102,7 +102,7 @@ function createInputElement() {
     inputBtnStart.setAttribute('type', 'image');
     inputBtnStart.setAttribute('id', 'start-button');
     inputBtnStart.setAttribute('src', '../img/start-button.svg');
-    inputBtnStart.setAttribute('alt', 'start'); // TODO use data-attribute to change values  
+    inputBtnStart.setAttribute('alt', 'start'); // TODO use datit a-attribute to change values
 
 
     div.appendChild(inputBtnStart);
