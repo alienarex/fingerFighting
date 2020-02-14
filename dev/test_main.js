@@ -14,7 +14,7 @@ function start() {
     // debugger
     texts.onchange = getChosenText;
 
-    f();
+
 }
 
 
@@ -67,7 +67,7 @@ function createDropMenuChooseTexts() {
     label.setAttribute('for', 'text-type');
     label.textContent = 'Choose Text:';
     chooseText.appendChild(label);
-
+    debugger
     let select = document.createElement('SELECT');
     select.setAttribute('name', 'text-type');
     select.setAttribute('id', 'text-type');
@@ -102,18 +102,15 @@ function createInputElement() {
     inputBtnStart.setAttribute('type', 'image');
     inputBtnStart.setAttribute('id', 'start-button');
     inputBtnStart.setAttribute('src', '../img/start-button.svg');
-    inputBtnStart.setAttribute('alt', 'start'); // TODO use datit a-attribute to change values
+    inputBtnStart.setAttribute('alt', 'start'); // TODO use data-attribute to change values
+    inputBtnStart.addEventListener('click', event => {
+// Code for timing
+    });
 
 
     div.appendChild(inputBtnStart);
+    // inputBtnStop.setAttribute('src', '../img/stop-button.svg');
 
-    let inputBtnStop = document.createElement('INPUT');
-    inputBtnStop.setAttribute('type', 'image');
-    inputBtnStop.setAttribute('id', 'stop-button');
-    inputBtnStop.setAttribute('src', '../img/stop-button.svg');
-    inputBtnStop.setAttribute('alt', 'stop');
-
-    div.appendChild(inputBtnStop);
     form.appendChild(div);
 
     // <div class="wrapper-game-buttons">
@@ -124,16 +121,18 @@ function createInputElement() {
 
 }
 
-function getChosenText(e) { // TODO Check if works when drop menu created
+function getChosenText(e) {
 
     let texts = JSON.parse(sessionStorage.texts);
-
+    console.log(e.target.options.selectedIndex);
     let test1 = document.getElementById('text-type'),
         textContent = document.getElementById('text-content-id'),//<div> element
-        selectedIndex = test1.options[test1.selectedIndex].value, // returns index of selected
+
+        selectedIndex = e.target.options.selectedIndex,
+        // test1.options[test1.selectedIndex].value, // returns index of selected
         contentTitle, contentAuthor;
 
-    let selectedObject = texts[selectedIndex];
+    let selectedObject = texts[e.target.options.selectedIndex];
 
     let paragraph = document.createElement('P');
 
@@ -157,6 +156,8 @@ function getChosenText(e) { // TODO Check if works when drop menu created
         elementSpan.innerText = selectedObject.text[i];
         paragraph.appendChild(elementSpan);
     }
+
+    debugger
 
     textContent.appendChild(paragraph);
     startFingerFight(selectedObject.text);
