@@ -9,12 +9,7 @@ function start() {
 
     }
     let texts = document.getElementById('text-type');
-    // let testar2 = texts.options[texts.selectedIndex].text;
-    // let op = document.getElementById('text-type').options;
-    // debugger
     texts.onchange = getChosenText;
-
-
 }
 
 
