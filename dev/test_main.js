@@ -127,7 +127,7 @@ function getChosenText(e) {
         // test1.options[test1.selectedIndex].value, // returns index of selected
         contentTitle, contentAuthor;
 
-    let selectedObject = texts[e.target.options.selectedIndex];
+    let selectedObject = texts[selectedIndex];
 
     let paragraph = document.createElement('P');
 
@@ -155,12 +155,13 @@ function getChosenText(e) {
     debugger
 
     textContent.appendChild(paragraph);
+
     startFingerFight(selectedObject.text);
 }
 
 
 function startFingerFight(controlString) {
-
+    debugger
     let inputElement = document.getElementById('text-value');
     let typedString = '';
     let writtenChars = 0, countWordsInControlString = 0, currentWords;
@@ -176,11 +177,12 @@ function startFingerFight(controlString) {
 
     }
 
+
     function getInputValue(keyUpEvent) {
         // TODO How to ??
 
         typedString += keyUpEvent.key;
-
+        debugger
         document.getElementById('text-value').value = typedString;
 
         if (controlString[writtenChars] === ' ') {
@@ -195,8 +197,8 @@ function startFingerFight(controlString) {
         writtenChars++;
     }
 
-
-    inputElement.addEventListener('keyup', getInputValue);
+    inputElement.onkeyup = getInputValue;
+    // document.addEventListener('keyup', getInputValue, false);
 
 }
 
