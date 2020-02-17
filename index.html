@@ -1,53 +1,61 @@
 <!DOCTYPE html>
-
-<!--
-Creator:
-Annica Alienus
-anbj1001
-anbj1001@student.miun.se
--->
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
-    <title>Startsida</title>
+    <link rel="stylesheet" href="css/stylesheet.css">
     <script src="js/main.js"></script>
+    <title>testStart</title>
 </head>
-
-
 <body>
-<!--Wrapper for the body element. Shall always be directly after <body> -->
-<main class="body-wrapper">
-    <div id="content-wrapper">
+<div id="page-container"> <!-- To control body size and footer-->
+    <div id="content-wrap"> <!-- To control footer-->
 
-        <header>
-            <h1 id="header-titel"><span id="label-logo"></span> TouchTyping </h1>
-        </header>
-        <div id="choose-text-wrapper">
+        <div class="wrapper ">
 
-            <span>Choose text</span>
-            <label id="choose-text">
+            <header>
 
-                <select>
-                    <option value="text_1">text 1</option>
-                    <option value="text_2">text 2</option>
-                    <option value="text_3">text 3</option>
-                </select>
-            </label>
+                <h1 id="label"><span id="label-logo"></span>FingerFighting!</h1>
+            </header>
+            <main>
+                <div class="section settings">
+                    <form action="#" class="settings" id="settings">
+                        <div class="group ignore-case">
+                            <input type="checkbox" id="ignore-case">
+                            <label for="ignore-case">Ignore Casing</label>
+                        </div>
+
+                        <div class="group choose-language">
+                            <fieldset id="choose-language">
+                                <input type="radio" id="swedish" name="choose-language">
+                                <label for="swedish">Swedish</label>
+
+                                <input type="radio" id="english" name="choose-language">
+                                <label for="english">English</label>
+                            </fieldset>
+                        </div>
+
+                        <div class="group choose-text" id="choose-text-id">
+                        </div>
+                    </form>
+                </div>
+                <div class="section text-content" id="text-content-id">
+                </div>
+                <div class="section type-here" id="type-here">
+                    <!--                    <form action="#" id="input-text">-->
+
+
+                    <!--                    </form>-->
+                </div>
+            </main>
         </div>
-        <title>TouchTyping</title>
-        <section class="main-content">
-        </section>
 
         <footer id="main-footer">
-            <p>&copy; Copyright 2020 fingerFighting
-            <p>
+            <p>&copy; Copyright 2020 fingerFighting</p>
             <address> Kontakt: <a href="mailto:annica@alienus.se">Annica Alienus</a></address>
 
         </footer>
     </div>
-</main>
+</div>
 
 </body>
 </html>

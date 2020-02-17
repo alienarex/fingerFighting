@@ -1,169 +1,59 @@
-/*
-Creator:
-Annica Alienus
-anbj1001
-anbj1001@student.miun.se*/
-
-/*MEDIA BREAKPOINTS STAR*/
-/* smallest screen*/
-@media screen
-and ( max-width: 480px) {
-    #main-contact {
-        background: red;
-    }
-
-    article #full-size-img {
-        display: none;
-    }
-
-}
-
-@media print {
-    body * {
-        visibility: visible;
-    }
-
-    header {
-        visibility: hidden;
-    }
-
-    #booking-form .wrapper-input-booking-form * {
-        visibility: visible;
-        font-size: 14px;
-        background: #08c43a;
-    }
-
-    .btn-form {
-        visibility: hidden;
-    }
-
-    input {
-        outline: none;
-        border: none;
-        box-shadow: none;
-        font-size: 20px;
-    }
-
-    .right-aside-booking-seats * {
-        visibility: hidden;
-    }
-
-    .left-aside-booking-user-input {
-        align-content: center;
-        /*margin-right: 25%;*/
-        /*margin-left: 25%;*/
-        float: left;
-        height: 100%;
-        width: 100%;
-
-    }
-
-    #booking-form label {
-        font-size: 14px;
-    }
-}
-
-/*Medium screen. overrides smallest screen if it hits 480px*/
-@media screen
-and ( min-width: 480px) {
-    #main-contact {
-        background: blue;
-    }
-}
-
-/*Largest screen. overrides medium screen if it hits 1024px*/
-@media screen
-and ( min-width: 1024px) {
-    #main-contact {
-        background: green;
-    }
-}
-
-/*MEDIA BREAKPOINTS END*/
-
-/*Not sure if needed*/
-html, body {
+/* normalize sort of */
+body {
     margin: 0;
-
+    padding: 0;
 }
 
-/*Wrapper for body to avoid set values on body since you can't put width on body
-Reference: https://www.techonthenet.com/html/elements/body_tag.php*/
-.body-wrapper {
+body,
+* {
+    box-sizing: border-box;
+}
 
-    /*set size for page*/
-    min-height: 100vh; /*Set height as minimum of viewport*/
+
+input,
+textarea,
+select {
+    outline: none;
+    border: 1px solid #eee;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border: 1px solid #f00;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+}
+
+#page-container {
     max-width: 600px;
+    min-height: 100vh;
     margin: 0 auto;
 
-    /*declare background for page*/
-    /*image*/
-    /*background-image: url("../img/3d-grunge-room-interior-with-spotlight-smoky-atmosphere-background.jpg");*/
-
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     position: relative;
-}
-
-/*Content wrapper <div> is a container to be able to set the footer on the bottom of page
-Reference: https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
-*/
-#content-wrapper {
-    padding-bottom: 20px; /*Set to size of the main-footer*/
-    min-height: 890px;
-    /*background: greenyellow;*/
-    height: 100%;
-
+    background-color: #eee;
 
 }
 
-/*section for things to come*/
-.main-content {
-    padding-bottom: 2.5rem;
+#content-wrap {
+    padding-bottom: 20px;
+    min-height: 600px;
+}
+
+.wrapper {
+    max-width: 600px;
+    padding: 20px 4rem 20px 20px;
+    margin: 0 auto;
+    /*background-color: #eee;*/
+
+}
+
+.wrapper header {
     text-align: center;
-    margin: auto;
-    position: relative;
-    min-height: 400px;
-    height: 100%;
-    width: 90%;
-    /*background: rebeccapurple;*/
-}
-
-/* FOOTER CSS START*/
-/*Reference on setting footer position on bottom of page: https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-belongs-59c6aa05c59c/
-*/
-
-/*height uses rem because it didn't work with px.*/
-#main-footer {
-    border-top: 2px solid grey;
-    height: 2.5rem;
-    width: 100%;
-
-    font-size: 10px;
-
-    position: absolute;
-    bottom: 0;
-    padding-bottom: 0.8%;
-}
-
-#main-footer p {
-    padding-left: 3%;
-}
-
-#main-footer address {
-    padding-left: 3%;
-}
-
-/* FOOTER CSS END*/
-
-/*NAVBAR CSS START*/
-
-/*the ul-list inside the <nav> element containing logo and navigation links*/
-#nav-bar-list {
-    list-style: none;
-    margin: 0;
+    padding: 0 0 30px 0;
 }
 
 /*Set the size of the logo*/
@@ -173,27 +63,134 @@ Reference: https://www.freecodecamp.org/news/how-to-keep-your-footer-where-it-be
     width: 10%;
 }
 
-/*TODO Add suiting */
-#top-nav-bar {
-    border-bottom: 1pt solid black;
-    background-color: darkgray;
-    height: 50px;
+.wrapper div.section.settings form {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-#choose-text-wrapper {
+.wrapper div.section.settings form div.group {
+    width: 50%;
+}
+
+.wrapper div.section.settings form div.group.ignore-case {
+    order: 1;
+}
+
+.wrapper div.section.settings form div.group.choose-language {
+    order: 3;
+}
+
+.wrapper div.section.settings form div.group.choose-text {
+    order: 2;
     text-align: center;
-
 }
 
-#choose-text select {
+.wrapper div.section.settings form div.group.choose-text select#text-type {
     display: block;
-    margin: 0 auto;
-    border-radius: 5px;
-    padding: 7px;
-    font-size: 15px;
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: #444;
+    line-height: 1.3;
+    padding: 0.6em 1.4em 0.5em 0.8em;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+    border-radius: 0.5em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
 }
 
-#header-titel {
-    font-size: 25px;
-    color: black;
+.wrapper div.section.text-content {
+    border: 2px solid #f00;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 30px 0;
+    min-height: 200px;
+}
+
+.wrapper div.section.text-content p {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper div.section.text-content p h3 {
+    text-align: center;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+.wrapper div.section.text-content p.text-content-author {
+    text-align: center;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+.wrapper div.section.text-content p span.done {
+    background-color: #f0f;
+}
+
+.wrapper div.section.text-content p span.fail {
+    color: #f00;
+}
+
+.wrapper div.section.type-here form {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.wrapper div.section.type-here form input#text-value {
+    align-self: center;
+    width: 150px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    text-align: center;
+    outline: none;
+}
+
+#content-wrap .wrapper #type-here .wrapper-game-buttons {
+
+    height: 100px;
+    width: 100px;
+    display: block;
+
+}
+
+#content-wrap .wrapper #type-here .wrapper-game-buttons #game-button {
+    border-radius: 0.5em;
+    height: 25px;
+    widht: 25px;
+    padding: 0;
+    display: block;
+}
+
+#page-container #content-wrap #main-footer {
+    border-top: 2px solid grey;
+    height: 4rem;
+    width: 100%;
+
+    font-size: 10px;
+
+    position: absolute;
+    bottom: 0;
+    padding: 10px 0 0.8% 3%;
+    align-content: center;
+
+}
+
+#page-container #content-wrap #main-footer p {
+    height: 50%;
+    width: 100%;
+    margin: 0;
+}
+
+#page-container #content-wrap #main-footer address {
+    height: 50%;
+    width: 100%;
+
 }
