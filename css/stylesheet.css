@@ -1,4 +1,30 @@
 /* normalize sort of */
+@font-face {
+    font-family: Odibee Sans, cursive;
+    src: url('https://fonts.googleapis.com/css?family=Odibee+Sans&display=swap');
+}
+
+@font-face {
+    font-family: Sriracha, cursive;
+    src: url('https://fonts.googleapis.com/css?family=Sriracha&display=swap');
+}
+
+@keyframes animate-logo {
+    from {
+        height: 10%;
+        width: 10%;
+    }
+
+    /*from {*/
+    /*    height: 20%;*/
+    /*    width: 20%;*/
+    /*}*/
+    to {
+        height: 20%;
+        width: 20%;
+    }
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -55,9 +81,19 @@ fieldset {
     padding: 0 0 30px 0;
 }
 
+#label {
+    font-family: Sriracha, cursive;
+    color: saddlebrown;
+}
+
 /*Set the size of the logo*/
 #label-logo {
-
+    /*max-height: 100px;*/
+    /*max-width: 100px;*/
+    animation-name: animate-logo;
+    animation-duration: 2s;
+    animation-iteration-count: 2;
+    animation-direction: alternate;
     height: 10%;
     width: 10%;
 }
@@ -72,19 +108,19 @@ fieldset {
 }
 
 .wrapper div.section.settings form div.group.ignore-case {
-    visibility: hidden;
+    visibility: hidden; /* hidden in UI since it's not implemented */
     order: 1;
 }
 
 .wrapper div.section.settings form div.group.choose-language {
-    visibility: hidden;
-
+    visibility: hidden; /* hidden in UI since it's not implemented */
     order: 3;
 }
 
 .wrapper div.section.settings form div.group.choose-text {
     order: 2;
     text-align: center;
+    font-family: Odibee Sans, cursive;
 }
 
 .wrapper div.section.settings form div.group.choose-text select#text-type {
