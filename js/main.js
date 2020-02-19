@@ -179,16 +179,22 @@ function getChosenText(e) {
 
     contentAuthor.innerText = "Författare: " + selectedObject.author + calcTexts;
     paragraph.appendChild(contentAuthor);
-
+    let audio = document.createElement('AUDIO');
+    audio.id = 'audio';
+    audio.src = 'http://www.soundjay.com/button/beep-07.wav';
+    audio.autostart = 'false';
 //Puts all chars in <span> adding classes
+
     for (let i = 0; i < selectedObject.text.length; i++) {
         let elementSpan = document.createElement('SPAN');
+
         elementSpan.classList.add('text-char');
         elementSpan.classList.add('inactive');
-
         elementSpan.innerText = selectedObject.text[i];
+
         paragraph.appendChild(elementSpan);
     }
+    paragraph.appendChild(audio);
 
     textContent.appendChild(paragraph);
 }
@@ -259,14 +265,23 @@ function playFingerFight(event) {
 
         if (textElements[typedChars].innerText === keyUpEvent.key) {
             correctChars++;
+            textElements[typedChars].classList.add('done');
+            textElements[typedChars].classList.remove('active');
+
 
         } else {
             errors++;
+            let sound = document.getElementById("audio");
+            sound.play();
+            textElements[typedChars].classList.add('fail')
+            textElements[typedChars].classList.remove('active');
+
         }
         debugger
 
-        textElements[typedChars].setAttribute('class', 'inactive');
-        textElements[typedChars + 1].setAttribute('class', 'active');
+        textElements[typedChars].classList.add('inactive');
+        textElements[typedChars + 1].classList.remove('inactive');
+        textElements[typedChars + 1].classList.add('active');
         typedChars++;
         printTypedWord();
     }

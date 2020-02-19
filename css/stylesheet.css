@@ -170,7 +170,8 @@ fieldset {
 }
 
 .wrapper div.section.text-content p span.done {
-    background-color: #f0f;
+    color: green;
+    /*background: green;*/
 }
 
 .wrapper div.section.text-content p span.fail {
