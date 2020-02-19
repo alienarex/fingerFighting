@@ -108,7 +108,7 @@ fieldset {
 }
 
 .wrapper div.section.settings form div.group.ignore-case {
-    visibility: hidden; /* hidden in UI since it's not implemented */
+    visibility: visible; /* hidden in UI since it's not implemented */
     order: 1;
 }
 

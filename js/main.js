@@ -206,7 +206,7 @@ function playFingerFight(event) {
     let errors = 0, totalErrors = 0, correctChars = 0, accuracy,
         startTime, time = new Date(), elapsedMin, diffMillisec, grossWPM, netWPM;
     let typedString = '',
-        typedChars = 0;
+        typedChars = 0, ignoreCase = document.getElementById('ignore-case').checked;
 
 
     event.preventDefault();
@@ -218,11 +218,18 @@ function playFingerFight(event) {
         inputElement.disabled = false;
         textElements[typedChars].setAttribute('class', 'active');
         inputElement.focus();
+
+        document.getElementById('gross-wpm-value').innerText = null;
+        document.getElementById('net-wpm-value').innerText = null;
+
+        document.getElementById('errors-value').innerText = null;
+        document.getElementById('accuracy-value').innerText = null;
         //TODO clear all stats
 
     } else if (image === 'stop') {
         event.target.setAttribute('src', 'img/start-button.svg');
         event.target.setAttribute('alt', 'start');
+        inputElement.disabled = true;
 
     }
 
