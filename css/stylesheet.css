@@ -39,7 +39,6 @@ fieldset {
 }
 
 #content-wrap {
-    padding-bottom: 20px;
     min-height: 600px;
 }
 
@@ -73,10 +72,13 @@ fieldset {
 }
 
 .wrapper div.section.settings form div.group.ignore-case {
+    visibility: hidden;
     order: 1;
 }
 
 .wrapper div.section.settings form div.group.choose-language {
+    visibility: hidden;
+
     order: 3;
 }
 
@@ -139,39 +141,87 @@ fieldset {
     color: #f00;
 }
 
-.wrapper div.section.type-here form {
+.wrapper .section.type-here form {
     display: flex;
     flex-wrap: nowrap;
 }
 
-.wrapper div.section.type-here form input#text-value {
+.wrapper .section.type-here form input {
     align-self: center;
-    width: 150px;
     margin: 0 auto;
+
+    width: 150px;
     padding: 10px 20px;
     text-align: center;
     outline: none;
 }
 
 #content-wrap .wrapper #type-here .wrapper-game-buttons {
-
-    height: 100px;
-    width: 100px;
+    margin: 0 auto;
+    height: 50px;
+    width: 50px;
     display: block;
 
 }
 
 #content-wrap .wrapper #type-here .wrapper-game-buttons #game-button {
     border-radius: 0.5em;
-    height: 25px;
-    widht: 25px;
+    height: 40px;
+    width: 40px;
     padding: 0;
     display: block;
 }
 
-#page-container #content-wrap #main-footer {
+#content-wrap .wrapper #type-here #statistics {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 200px;
+}
+
+#content-wrap .wrapper #type-here #statistics > div {
+    display: flex;
+    background: lightgoldenrodyellow;
+
+    flex-wrap: wrap;
+    width: 100%;
+    height: 50%;
+    border: 1px solid grey;
+}
+
+#content-wrap .wrapper #type-here #statistics > div > p {
+    display: flex;
+    flex-basis: 50%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    padding: 2px;
+    margin: 0 auto;
+    border: 1px solid lightgrey;
+}
+
+#content-wrap .wrapper #type-here #statistics > section > p:nth-child(1) {
+    flex-basis: 80%;
+    border: 1px solid #a9a9a9;
+}
+
+#content-wrap .wrapper #type-here #statistics > section > p:nth-child(2) {
+    flex-basis: 20%;
+    text-align: right;
+    border: 1px solid #a9a9a9;
+}
+
+.active {
+    background: grey;
+    backdrop-filter: opacity(20%);
+}
+
+/*Footer*/
+#content-wrap {
+    padding-bottom: 55px;
+}
+
+#page-container #main-footer {
+    height: 55px;
     border-top: 2px solid grey;
-    height: 4rem;
     width: 100%;
 
     font-size: 10px;
@@ -183,14 +233,7 @@ fieldset {
 
 }
 
-#page-container #content-wrap #main-footer p {
-    height: 50%;
-    width: 100%;
+#page-container #main-footer > p {
     margin: 0;
-}
-
-#page-container #content-wrap #main-footer address {
-    height: 50%;
-    width: 100%;
-
+    padding: 0 0 15px 0;
 }

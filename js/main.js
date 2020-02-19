@@ -1,6 +1,6 @@
 function start() {
 
-    debugger
+    // debugger
     let timing = new Date();
     const index = 'index.html';
     let path = location.pathname; // get the path for the page that calls the event.
@@ -9,6 +9,7 @@ function start() {
         setLogoInHeader();
         setBackgroundImagePage();
     }
+    debugger
     let texts = document.getElementById('text-type');
     texts.onchange = getChosenText;
 }
@@ -63,7 +64,7 @@ function createDropMenuChooseTexts() {
     label.setAttribute('for', 'text-type');
     label.textContent = 'Choose Text:';
     chooseText.appendChild(label);
-    debugger
+    // debugger
     let select = document.createElement('SELECT');
     select.setAttribute('name', 'text-type');
     select.setAttribute('id', 'text-type');
@@ -83,7 +84,7 @@ function createDropMenuChooseTexts() {
 }
 
 function createInputElement() {
-    debugger
+    // debugger
     let sectionTypeHere = document.getElementById('type-here');
     let form = document.createElement('FORM');
     form.setAttribute('id', 'input-text');
@@ -91,8 +92,10 @@ function createInputElement() {
 
     // let form = document.getElementById('input-text');
     let inputElement = document.createElement('INPUT');
+    inputElement.placeholder = 'Type here..';
     inputElement.setAttribute('id', 'text-value');
     inputElement.setAttribute('type', 'text');
+    inputElement.disabled = true;
 
     form.appendChild(inputElement);
     sectionTypeHere.appendChild(form);
@@ -105,47 +108,48 @@ function createInputElement() {
     inputBtnStart.setAttribute('id', 'game-button');
     inputBtnStart.setAttribute('src', 'img/start-button.svg');
     inputBtnStart.setAttribute('alt', 'start');
+    inputBtnStart.addEventListener('click', playFingerFight, false);
 
-    div.appendChild(addEventToButton(inputBtnStart));
-
+    div.appendChild(inputBtnStart);
     sectionTypeHere.appendChild(div);
+
+
+    sectionTypeHere.appendChild(createElementStatistics());
 }
 
-function addEventToButton(inputBtnStart) {
-    inputBtnStart.addEventListener('click', (event) => {
-        event.preventDefault();
-        let image = event.target.getAttribute('alt');
-        if (image === 'start') {
-            event.target.setAttribute('src', 'img/stop-button.svg');
-            event.target.setAttribute('alt', 'stop');
+function createElementStatistics() {
 
-        } else if (image === 'stop') {
-            event.target.setAttribute('src', 'img/start-button.svg');
-            event.target.setAttribute('alt', 'start');
+    let section = document.createElement('SECTION');
+    section.setAttribute('id', 'statistics');
+    let arr = ['Gross WPM:', 'Net WPM: ', 'Accuracy: ', 'Errors: '];
+    let statElementId = ['gross-wpm-value', 'net-wpm-value', 'accuracy-value', 'errors-value'];
+    for (let i = 0; i < 4; i++) {
 
-        }
-        debugger
-        console.log(image);
+        let div = document.createElement('DIV');
+        let paragraph = document.createElement('P');
+        paragraph.classList.add('label');
+        paragraph.innerText = arr[i];
+        div.appendChild(paragraph);
+        paragraph = document.createElement('P');
+        paragraph.classList.add('value');
+        paragraph.setAttribute('id', statElementId[i]);
 
-    });
-    return inputBtnStart;
-    // if (image === 'start') {
-    //
-    // }
-// Code for timing
+        div.appendChild(paragraph);
+        section.appendChild(div);
 
+    }
+
+    return section;
 }
 
 function getChosenText(e) {
 
     let texts = JSON.parse(sessionStorage.texts);
-    console.log(e.target.options.selectedIndex);
     let test1 = document.getElementById('text-type'),
         textContent = document.getElementById('text-content-id'),//<div> element
 
         selectedIndex = e.target.options.selectedIndex,
-        // test1.options[test1.selectedIndex].value, // returns index of selected
-        contentTitle, contentAuthor;
+        contentTitle, contentAuthor, textWords = 0, textChars = 0;
 
     let selectedObject = texts[selectedIndex];
 
@@ -161,64 +165,113 @@ function getChosenText(e) {
 
     contentAuthor = document.createElement('P');
     contentAuthor.classList.add('text-content-author');
-    contentAuthor.innerText = "Författare: " + selectedObject.author;
+
+    // Loop through the object counting words and chars adding to author element
+    for (let i = 0; i < selectedObject.text.length; i++) {
+
+        if (selectedObject.text[i] === ' ') {
+            textWords++;
+            textChars--; // Removes the whitespace character from counter.
+        }
+        textChars++;
+    }
+    let calcTexts = ' (' + textWords + ' words' + ', ' + textChars + ' chars)';
+
+    contentAuthor.innerText = "Författare: " + selectedObject.author + calcTexts;
     paragraph.appendChild(contentAuthor);
 
-
+//Puts all chars in <span> adding classes
     for (let i = 0; i < selectedObject.text.length; i++) {
         let elementSpan = document.createElement('SPAN');
+        elementSpan.classList.add('text-char');
+        elementSpan.classList.add('inactive');
 
         elementSpan.innerText = selectedObject.text[i];
         paragraph.appendChild(elementSpan);
     }
 
-    debugger
-
     textContent.appendChild(paragraph);
-
-    startFingerFight(selectedObject.text);
 }
 
 
-function startFingerFight(controlString) {
-    debugger
+function playFingerFight(event) {
     let inputElement = document.getElementById('text-value');
-    let typedString = '';
-    let writtenChars = 0, countWordsInControlString = 0, currentWords;
+    let textElements = document.querySelectorAll('.text-char');
+    let errors = 0, totalErrors = 0, correctChars = 0, accuracy,
+        startTime, time = new Date(), elapsedMin, diffMillisec, grossWPM, netWPM;
+    let typedString = '',
+        typedChars = 0;
 
 
-    function currentWordWritten() {
+    event.preventDefault();
+    let image = event.target.getAttribute('alt');
+    if (image === 'start') {
+        event.target.setAttribute('src', 'img/stop-button.svg');
+        event.target.setAttribute('alt', 'stop');
+        startTime = time.getTime();
+        inputElement.disabled = false;
+        textElements[typedChars].setAttribute('class', 'active');
+        inputElement.focus();
+        //TODO clear all stats
+
+    } else if (image === 'stop') {
+        event.target.setAttribute('src', 'img/start-button.svg');
+        event.target.setAttribute('alt', 'start');
+
+    }
+
+    function printTypedWord() {
 
         document.getElementById('text-value').value = typedString;// under DEV. Create some kind of substring to print in textbox
 
     }
 
-    function removeWrittenWordFromTextbox() {
+    function calculateStat() {
 
+        totalErrors += errors;
+        correctChars = (typedChars - (totalErrors + errors));
+        accuracy = ((correctChars / typedChars) * 100);
+
+        if (elapsedMin >= 1) {
+            grossWPM = Math.ceil((typedChars / 5) / elapsedMin);
+            netWPM = Math.ceil(grossWPM - (errors / 60));
+            document.getElementById('gross-wpm-value').innerText = grossWPM;
+            document.getElementById('net-wpm-value').innerText = netWPM;
+        }
+
+
+        document.getElementById('errors-value').innerText = totalErrors;
+        document.getElementById('accuracy-value').innerText = accuracy + ' %';
     }
 
-
     function getInputValue(keyUpEvent) {
-
-
         typedString += keyUpEvent.key;
         debugger
-        document.getElementById('text-value').value = typedString;
 
-        if (controlString[writtenChars] === ' ') {
+        if (keyUpEvent.key === ' ') {
 
             typedString = "";
+
+            diffMillisec = Date.now() - new Date(startTime).getTime();// Diff  between now and set time
+            elapsedMin = Math.floor(diffMillisec / 60000);// Calculates elapsedMin from difffMillisec
+            calculateStat();
         }
 
-        if (controlString[writtenChars] === keyUpEvent.key) {
-            console.log('Funkish!!');
+        if (textElements[typedChars].innerText === keyUpEvent.key) {
+            correctChars++;
 
+        } else {
+            errors++;
         }
-        writtenChars++;
+        debugger
+
+        textElements[typedChars].setAttribute('class', 'inactive');
+        textElements[typedChars + 1].setAttribute('class', 'active');
+        typedChars++;
+        printTypedWord();
     }
 
     inputElement.onkeyup = getInputValue;
-    // document.addEventListener('keyup', getInputValue, false);
 
 }
 
