@@ -8,10 +8,11 @@ function start() {
         getTextsFromJson();
         setLogoInHeader();
         setBackgroundImagePage();
+        debugger
+        // TODO fix onchange on select option. Doesn't get trigged.
+        let texts = document.getElementById('text-type');
+        texts.onchange = getChosenText;
     }
-    debugger
-    let texts = document.getElementById('text-type');
-    texts.onchange = getChosenText;
 }
 
 
@@ -22,8 +23,8 @@ function start() {
 function getTextsFromJson() {
 
     let urlJsonTexts = 'JSON/texts.json';
-
-    if (sessionStorage.texts == null) {
+    debugger
+    if (sessionStorage.texts === undefined) {
 
         var client = new HttpClient();
         client.get(urlJsonTexts, function (response) {
@@ -31,10 +32,10 @@ function getTextsFromJson() {
             sessionStorage.texts = response;
             createDropMenuChooseTexts();
         });
-
     } else {
 
         createDropMenuChooseTexts();
+
     }
 }
 
@@ -57,24 +58,23 @@ var HttpClient = function () {
 function createDropMenuChooseTexts() {
 
     let texts = JSON.parse(sessionStorage.texts);
-    let chooseText = document.getElementById('choose-text-id');
-    let setOptionValue = 0;
+    let chooseText = document.getElementById('choose-text-id'),
+        select = document.getElementById('text-type');
+    let setOptionValue = 0, option;
 
     let label = document.createElement('LABEL');
     label.setAttribute('for', 'text-type');
     label.textContent = 'Choose Text:';
     chooseText.appendChild(label);
-    // debugger
-    let select = document.createElement('SELECT');
-    select.setAttribute('name', 'text-type');
-    select.setAttribute('id', 'text-type');
+    debugger
 
     texts.forEach(text => {
 
-        let option = document.createElement('option'); // will loop through texts and add option for each
+        option = document.createElement('option'); // will loop through texts and add option for each
         option.setAttribute('value', setOptionValue.toString());
         option.text = text.title;
-        option.addEventListener('change', getChosenText);
+        option.addEventListener('onchange', getChosenText);
+        // option.onchange = getChosenText;
         select.appendChild(option);
         setOptionValue++;
     });
@@ -144,13 +144,16 @@ function createElementStatistics() {
 
 function getChosenText(e) {
 
+    debugger
+
     let texts = JSON.parse(sessionStorage.texts);
+
     let test1 = document.getElementById('text-type'),
         textContent = document.getElementById('text-content-id'),//<div> element
 
         selectedIndex = e.target.options.selectedIndex,
         contentTitle, contentAuthor, textWords = 0, textChars = 0;
-
+    textContent.innerHTML = ''; // Removes all children from paragraph.
     let selectedObject = texts[selectedIndex];
 
     let paragraph = document.createElement('P');
@@ -219,17 +222,7 @@ function playFingerFight(event) {
         textElements[typedChars].setAttribute('class', 'active');
         inputElement.focus();
 
-        document.getElementById('gross-wpm-value').innerText = null;
-        document.getElementById('net-wpm-value').innerText = null;
-
-        document.getElementById('errors-value').innerText = null;
-        document.getElementById('accuracy-value').innerText = null;
-        //TODO clear all stats
-
-    } else if (image === 'stop') {
-        event.target.setAttribute('src', 'img/start-button.svg');
-        event.target.setAttribute('alt', 'start');
-        inputElement.disabled = true;
+        document.getElementById('gross-wpm-value').innerText = A
 
     }
 
