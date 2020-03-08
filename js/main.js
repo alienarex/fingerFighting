@@ -68,12 +68,13 @@ function createDropMenuChooseTexts() {
     chooseText.appendChild(label);
     debugger
 
+
     texts.forEach(text => {
 
         option = document.createElement('option'); // will loop through texts and add option for each
         option.setAttribute('value', setOptionValue.toString());
         option.text = text.title;
-        option.addEventListener('onchange', getChosenText);
+        // option.addEventListener('onchange', getChosenText);
         // option.onchange = getChosenText;
         select.appendChild(option);
         setOptionValue++;
@@ -144,14 +145,13 @@ function createElementStatistics() {
 
 function getChosenText(e) {
 
-    debugger
 
     let texts = JSON.parse(sessionStorage.texts);
 
     let test1 = document.getElementById('text-type'),
         textContent = document.getElementById('text-content-id'),//<div> element
 
-        selectedIndex = e.target.options.selectedIndex,
+        selectedIndex = e.target.options.selectedIndex - 1,// removes for the hard coded <option> in index.html
         contentTitle, contentAuthor, textWords = 0, textChars = 0;
     textContent.innerHTML = ''; // Removes all children from paragraph.
     let selectedObject = texts[selectedIndex];
@@ -186,6 +186,8 @@ function getChosenText(e) {
     audio.id = 'audio';
     audio.src = 'http://www.soundjay.com/button/beep-07.wav';
     audio.autostart = 'false';
+    debugger
+
 //Puts all chars in <span> adding classes
 
     for (let i = 0; i < selectedObject.text.length; i++) {
@@ -197,6 +199,7 @@ function getChosenText(e) {
 
         paragraph.appendChild(elementSpan);
     }
+    debugger
     paragraph.appendChild(audio);
 
     textContent.appendChild(paragraph);
@@ -209,8 +212,9 @@ function playFingerFight(event) {
     let errors = 0, totalErrors = 0, correctChars = 0, accuracy,
         startTime, time = new Date(), elapsedMin, diffMillisec, grossWPM, netWPM;
     let typedString = '',
-        typedChars = 0, ignoreCase = document.getElementById('ignore-case').checked;
-
+        typedChars = 0, ignoreCase = document.getElementById('ignore-case').checked,
+        button = document.getElementById('game-button');
+    button.onclick = endGame;
 
     event.preventDefault();
     let image = event.target.getAttribute('alt');
@@ -222,8 +226,14 @@ function playFingerFight(event) {
         textElements[typedChars].setAttribute('class', 'active');
         inputElement.focus();
 
-        document.getElementById('gross-wpm-value').innerText = A
+        // document.getElementById('gross-wpm-value').innerText = A
 
+    }
+
+    function endGame() {
+        event.target.setAttribute('src', 'img/start-button.svg');
+        event.target.setAttribute('alt', 'start');
+        inputElement.disabled = true;
     }
 
     function printTypedWord() {

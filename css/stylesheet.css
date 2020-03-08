@@ -98,32 +98,32 @@ fieldset {
     width: 10%;
 }
 
-.wrapper div.section.settings form {
+.wrapper section.section.settings form {
     display: flex;
     flex-wrap: wrap;
 }
 
-.wrapper div.section.settings form div.group {
+.wrapper section.section.settings form div.group {
     width: 50%;
 }
 
-.wrapper div.section.settings form div.group.ignore-case {
+.wrapper section.section.settings form div.group.ignore-case {
     visibility: visible; /* hidden in UI since it's not implemented */
     order: 1;
 }
 
-.wrapper div.section.settings form div.group.choose-language {
+    .wrapper section.section.settings form div.group.choose-language {
     visibility: hidden; /* hidden in UI since it's not implemented */
     order: 3;
 }
 
-.wrapper div.section.settings form div.group.choose-text {
+.wrapper section.section.settings form div.group.choose-text {
     order: 2;
     text-align: center;
     font-family: Odibee Sans, cursive;
 }
 
-.wrapper div.section.settings form div.group.choose-text select#text-type {
+.wrapper section.section.settings form div.group.choose-text select#text-type {
     display: block;
     font-size: 16px;
     font-family: sans-serif;
@@ -144,7 +144,7 @@ fieldset {
     background-color: #fff;
 }
 
-.wrapper div.section.text-content {
+.wrapper section.section.text-content {
     border: 2px solid #f00;
     border-radius: 10px;
     padding: 20px;
@@ -152,29 +152,29 @@ fieldset {
     min-height: 200px;
 }
 
-.wrapper div.section.text-content p {
+.wrapper section.section.text-content p {
     margin: 0;
     padding: 0;
 }
 
-.wrapper div.section.text-content p h3 {
+.wrapper section.section.text-content p h3 {
     text-align: center;
     margin: 0 0 10px 0;
     padding: 0;
 }
 
-.wrapper div.section.text-content p.text-content-author {
+.wrapper section.section.text-content p.text-content-author {
     text-align: center;
     margin: 0 0 10px 0;
     padding: 0;
 }
 
-.wrapper div.section.text-content p span.done {
+.wrapper section.section.text-content p span.done {
     color: green;
     /*background: green;*/
 }
 
-.wrapper div.section.text-content p span.fail {
+.wrapper section.section.text-content p span.fail {
     color: #f00;
 }
 
