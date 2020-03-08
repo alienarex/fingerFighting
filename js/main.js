@@ -226,7 +226,7 @@ function playFingerFight(event) {
         textElements[typedChars].setAttribute('class', 'active');
         inputElement.focus();
 
-        // document.getElementById('gross-wpm-value').innerText = A
+        document.getElementById('gross-wpm-value').innerText = '';
 
     }
 
