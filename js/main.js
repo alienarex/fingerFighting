@@ -12,7 +12,6 @@ function start() {
     }
 }
 
-
 /**
  * ref1 : https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
  * ref 2: https://stackoverflow.com/a/22076667
@@ -24,14 +23,11 @@ function getTextsFromJson() {
 
         var client = new HttpClient();
         client.get(urlJsonTexts, function (response) {
-
             sessionStorage.texts = response;
             createDropMenuChooseTexts();
         });
     } else {
-
         createDropMenuChooseTexts();
-
     }
 }
 
@@ -55,8 +51,8 @@ function createDropMenuChooseTexts() {
 
     let texts = JSON.parse(sessionStorage.texts);
     let chooseText = document.getElementById('choose-text-id'),
-        select = document.getElementById('text-type');
-    let setOptionValue = 0, option;
+        select = document.getElementById('text-type'),
+        setOptionValue = 0, option;
 
     let label = document.createElement('LABEL');
     label.setAttribute('for', 'text-type');
@@ -64,12 +60,9 @@ function createDropMenuChooseTexts() {
     chooseText.appendChild(label);
 
     texts.forEach(text => {
-
         option = document.createElement('option'); // will loop through texts and add option for each
         option.setAttribute('value', setOptionValue.toString());
         option.text = text.title;
-        // option.addEventListener('onchange', getChosenText);
-        // option.onchange = getChosenText;
         select.appendChild(option);
         setOptionValue++;
     });
@@ -79,8 +72,8 @@ function createDropMenuChooseTexts() {
 }
 
 function createInputElement() {
-    let sectionTypeHere = document.getElementById('type-here');
-    let form = document.createElement('FORM');
+    let sectionTypeHere = document.getElementById('type-here'),
+        form = document.createElement('FORM');
     form.setAttribute('id', 'input-text');
     form.setAttribute('action', '#');
 
@@ -89,7 +82,6 @@ function createInputElement() {
     inputElement.setAttribute('id', 'text-value');
     inputElement.setAttribute('type', 'text');
     inputElement.disabled = true;
-
     form.appendChild(inputElement);
     sectionTypeHere.appendChild(form);
     let div = document.createElement('DIV');
@@ -113,11 +105,12 @@ function createInputElement() {
 
 function createElementStatistics() {
 
-    let section = document.createElement('SECTION');
+    let section = document.createElement('SECTION'),
+        arr = ['Gross WPM:', 'Net WPM: ', 'Accuracy: ', 'Errors: '],
+        statElementId = ['gross-wpm-value', 'net-wpm-value', 'accuracy-value', 'errors-value'];
     section.setAttribute('id', 'statistics');
-    let arr = ['Gross WPM:', 'Net WPM: ', 'Accuracy: ', 'Errors: '];
-    let statElementId = ['gross-wpm-value', 'net-wpm-value', 'accuracy-value', 'errors-value'];
-    for (let i = 0; i < 4; i++) {
+
+    for (let i = 0; i < arr.length; i++) {
 
         let div = document.createElement('DIV');
         let paragraph = document.createElement('P');
@@ -142,14 +135,12 @@ function getChosenText(e) {
     let texts = JSON.parse(sessionStorage.texts);
 
     let textContent = document.getElementById('text-content-id'),//<section> element
-
         selectedIndex = e.target.options.selectedIndex - 1,// removes for the hard coded <option> in index.html
-        contentTitle, contentAuthor, textWords = 0, textChars = 0;
+        contentTitle, contentAuthor, textWords = 0, textChars = 0,
+        selectedObject = texts[selectedIndex];
     textContent.innerHTML = ''; // Removes all children from paragraph.
-    let selectedObject = texts[selectedIndex];
 
     let paragraph = document.createElement('P');
-
     paragraph.classList.add('text-content');
 
     contentTitle = document.createElement('H3');
@@ -179,7 +170,7 @@ function getChosenText(e) {
     audio.src = 'http://www.soundjay.com/button/beep-07.wav';
     audio.autostart = 'false';
 
-//Puts all chars in <span> and adding classes
+    //Puts all chars in <span> and adding classes
     for (let i = 0; i < selectedObject.text.length; i++) {
         let elementSpan = document.createElement('SPAN');
 
@@ -197,15 +188,15 @@ function getChosenText(e) {
 function playFingerFight(event) {
     let inputElement = document.getElementById('text-value');
     let textElements = document.querySelectorAll('.text-char');
-    let errors = 0, correctChars = 0, accuracy, currentChars = 0,
-        startTime, time = new Date(), elapsedMin, diffMillisec, grossWPM, netWPM;
-    let typedChars = 0, ignoreCase = document.getElementById('ignore-case').checked,
-        button = document.getElementById('game-button');
+    let errors = 0, correctChars = 0, typedChars = 0, accuracy, currentChars = 0,
+        startTime, time = new Date(), elapsedMin, diffMillisec, grossWPM, netWPM,
+        ignoreCase = document.getElementById('ignore-case').checked,
+        button = document.getElementById('game-button'),
+        image = event.target.getAttribute('alt'); // gets current status on the game
 
     button.onclick = endGame;
     event.preventDefault();
 
-    let image = event.target.getAttribute('alt');
     image === 'start' ? startGame() : endGame(); // either start och stop the game
 
     function startGame() {
@@ -243,14 +234,12 @@ function playFingerFight(event) {
     }
 
     function getInputValue(e) {
-
+        
         if (textElements[typedChars].innerText === e.target.value[currentChars]) {
             textElements[typedChars].classList.add('done');
             textElements[typedChars].classList.remove('active');
             correctChars++;
             currentChars++;
-
-
         } else {
             let sound = document.getElementById("audio");
             sound.play();
@@ -258,8 +247,8 @@ function playFingerFight(event) {
             textElements[typedChars].classList.remove('active');
             errors++;
             currentChars++;
-
         }
+
         textElements[typedChars].classList.add('inactive');
         textElements[typedChars + 1].classList.remove('inactive');
         textElements[typedChars + 1].classList.add('active');
