@@ -9,7 +9,6 @@ function start() {
         setLogoInHeader();
         setBackgroundImagePage();
         debugger
-        // TODO fix onchange on select option. Doesn't get trigged.
         let texts = document.getElementById('text-type');
         texts.onchange = getChosenText;
     }
@@ -109,6 +108,7 @@ function createInputElement() {
     inputBtnStart.setAttribute('id', 'game-button');
     inputBtnStart.setAttribute('src', 'img/start-button.svg');
     inputBtnStart.setAttribute('alt', 'start');
+
     inputBtnStart.addEventListener('click', playFingerFight, false);
 
     div.appendChild(inputBtnStart);
@@ -186,10 +186,8 @@ function getChosenText(e) {
     audio.id = 'audio';
     audio.src = 'http://www.soundjay.com/button/beep-07.wav';
     audio.autostart = 'false';
-    debugger
 
 //Puts all chars in <span> adding classes
-
     for (let i = 0; i < selectedObject.text.length; i++) {
         let elementSpan = document.createElement('SPAN');
 
@@ -199,7 +197,6 @@ function getChosenText(e) {
 
         paragraph.appendChild(elementSpan);
     }
-    debugger
     paragraph.appendChild(audio);
 
     textContent.appendChild(paragraph);
@@ -209,14 +206,14 @@ function getChosenText(e) {
 function playFingerFight(event) {
     let inputElement = document.getElementById('text-value');
     let textElements = document.querySelectorAll('.text-char');
-    let errors = 0, totalErrors = 0, correctChars = 0, accuracy,
+    let errors = 0, totalErrors = 0, correctChars = 0, accuracy, currentChars = 0,
         startTime, time = new Date(), elapsedMin, diffMillisec, grossWPM, netWPM;
-    let typedString = '',
-        typedChars = 0, ignoreCase = document.getElementById('ignore-case').checked,
+    let typedChars = 0, ignoreCase = document.getElementById('ignore-case').checked,
         button = document.getElementById('game-button');
     button.onclick = endGame;
-
+    debugger
     event.preventDefault();
+
     let image = event.target.getAttribute('alt');
     if (image === 'start') {
         event.target.setAttribute('src', 'img/stop-button.svg');
@@ -236,16 +233,10 @@ function playFingerFight(event) {
         inputElement.disabled = true;
     }
 
-    function printTypedWord() {
-
-        document.getElementById('text-value').value = typedString;// under DEV. Create some kind of substring to print in textbox
-
-    }
-
     function calculateStat() {
 
-        totalErrors += errors;
-        correctChars = (typedChars - (totalErrors + errors));
+        // totalErrors += errors;
+        // correctChars = (typedChars - (totalErrors + errors));
         accuracy = ((correctChars / typedChars) * 100);
 
         if (elapsedMin >= 1) {
@@ -256,47 +247,47 @@ function playFingerFight(event) {
         }
 
 
-        document.getElementById('errors-value').innerText = totalErrors;
-        document.getElementById('accuracy-value').innerText = accuracy + ' %';
+        document.getElementById('errors-value').innerText = errors.toString();
+        document.getElementById('accuracy-value').innerText = accuracy.toFixed(2) + ' %';
     }
 
-    function getInputValue(keyUpEvent) {
-        typedString += keyUpEvent.key;
+    function getInputValue(e) {
+
+        if (textElements[typedChars].innerText === e.target.value[currentChars]) {
+            textElements[typedChars].classList.add('done');
+            textElements[typedChars].classList.remove('active');
+            correctChars++;
+            currentChars++;
+
+
+        } else {
+            let sound = document.getElementById("audio");
+            sound.play();
+            textElements[typedChars].classList.add('fail');
+            textElements[typedChars].classList.remove('active');
+            errors++;
+            currentChars++;
+
+        }
         debugger
+        textElements[typedChars].classList.add('inactive');
+        textElements[typedChars + 1].classList.remove('inactive');
+        textElements[typedChars + 1].classList.add('active');
+        typedChars++;
 
-        if (keyUpEvent.key === ' ') {
-
-            typedString = "";
+        if (e.target.value[currentChars - 1] === ' ') { // subtract the added value above to check iff textbox value is whitespace.
+            document.getElementById('text-value').value = '';
+            currentChars = 0;
 
             diffMillisec = Date.now() - new Date(startTime).getTime();// Diff  between now and set time
             elapsedMin = Math.floor(diffMillisec / 60000);// Calculates elapsedMin from difffMillisec
             calculateStat();
         }
 
-        if (textElements[typedChars].innerText === keyUpEvent.key) {
-            correctChars++;
-            textElements[typedChars].classList.add('done');
-            textElements[typedChars].classList.remove('active');
-
-
-        } else {
-            errors++;
-            let sound = document.getElementById("audio");
-            sound.play();
-            textElements[typedChars].classList.add('fail')
-            textElements[typedChars].classList.remove('active');
-
-        }
-        debugger
-
-        textElements[typedChars].classList.add('inactive');
-        textElements[typedChars + 1].classList.remove('inactive');
-        textElements[typedChars + 1].classList.add('active');
-        typedChars++;
-        printTypedWord();
     }
 
-    inputElement.onkeyup = getInputValue;
+    inputElement.oninput = getInputValue;
+
 
 }
 
