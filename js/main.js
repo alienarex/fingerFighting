@@ -1,6 +1,5 @@
 function start() {
 
-    // debugger
     let timing = new Date();
     const index = 'index.html';
     let path = location.pathname; // get the path for the page that calls the event.
@@ -8,7 +7,6 @@ function start() {
         getTextsFromJson();
         setLogoInHeader();
         setBackgroundImagePage();
-        debugger
         let texts = document.getElementById('text-type');
         texts.onchange = getChosenText;
     }
@@ -22,7 +20,6 @@ function start() {
 function getTextsFromJson() {
 
     let urlJsonTexts = 'JSON/texts.json';
-    debugger
     if (sessionStorage.texts === undefined) {
 
         var client = new HttpClient();
@@ -65,8 +62,6 @@ function createDropMenuChooseTexts() {
     label.setAttribute('for', 'text-type');
     label.textContent = 'Choose Text:';
     chooseText.appendChild(label);
-    debugger
-
 
     texts.forEach(text => {
 
@@ -84,13 +79,11 @@ function createDropMenuChooseTexts() {
 }
 
 function createInputElement() {
-    // debugger
     let sectionTypeHere = document.getElementById('type-here');
     let form = document.createElement('FORM');
     form.setAttribute('id', 'input-text');
     form.setAttribute('action', '#');
 
-    // let form = document.getElementById('input-text');
     let inputElement = document.createElement('INPUT');
     inputElement.placeholder = 'Type here..';
     inputElement.setAttribute('id', 'text-value');
@@ -148,8 +141,7 @@ function getChosenText(e) {
 
     let texts = JSON.parse(sessionStorage.texts);
 
-    let test1 = document.getElementById('text-type'),
-        textContent = document.getElementById('text-content-id'),//<div> element
+    let textContent = document.getElementById('text-content-id'),//<section> element
 
         selectedIndex = e.target.options.selectedIndex - 1,// removes for the hard coded <option> in index.html
         contentTitle, contentAuthor, textWords = 0, textChars = 0;
@@ -187,7 +179,7 @@ function getChosenText(e) {
     audio.src = 'http://www.soundjay.com/button/beep-07.wav';
     audio.autostart = 'false';
 
-//Puts all chars in <span> adding classes
+//Puts all chars in <span> and adding classes
     for (let i = 0; i < selectedObject.text.length; i++) {
         let elementSpan = document.createElement('SPAN');
 
@@ -202,29 +194,32 @@ function getChosenText(e) {
     textContent.appendChild(paragraph);
 }
 
-
 function playFingerFight(event) {
     let inputElement = document.getElementById('text-value');
     let textElements = document.querySelectorAll('.text-char');
-    let errors = 0, totalErrors = 0, correctChars = 0, accuracy, currentChars = 0,
+    let errors = 0, correctChars = 0, accuracy, currentChars = 0,
         startTime, time = new Date(), elapsedMin, diffMillisec, grossWPM, netWPM;
     let typedChars = 0, ignoreCase = document.getElementById('ignore-case').checked,
         button = document.getElementById('game-button');
+
     button.onclick = endGame;
-    debugger
     event.preventDefault();
 
     let image = event.target.getAttribute('alt');
-    if (image === 'start') {
+    image === 'start' ? startGame() : endGame(); // either start och stop the game
+
+    function startGame() {
         event.target.setAttribute('src', 'img/stop-button.svg');
         event.target.setAttribute('alt', 'stop');
         startTime = time.getTime();
         inputElement.disabled = false;
-        textElements[typedChars].setAttribute('class', 'active');
+        textElements[typedChars].setAttribute('class', 'active');// highlights first letter
         inputElement.focus();
 
         document.getElementById('gross-wpm-value').innerText = '';
-
+        document.getElementById('net-wpm-value').innerText = '';
+        document.getElementById('accuracy-value').innerText = '';
+        document.getElementById('errors-value').innerText = '';
     }
 
     function endGame() {
@@ -235,8 +230,6 @@ function playFingerFight(event) {
 
     function calculateStat() {
 
-        // totalErrors += errors;
-        // correctChars = (typedChars - (totalErrors + errors));
         accuracy = ((correctChars / typedChars) * 100);
 
         if (elapsedMin >= 1) {
@@ -245,8 +238,6 @@ function playFingerFight(event) {
             document.getElementById('gross-wpm-value').innerText = grossWPM;
             document.getElementById('net-wpm-value').innerText = netWPM;
         }
-
-
         document.getElementById('errors-value').innerText = errors.toString();
         document.getElementById('accuracy-value').innerText = accuracy.toFixed(2) + ' %';
     }
@@ -269,7 +260,6 @@ function playFingerFight(event) {
             currentChars++;
 
         }
-        debugger
         textElements[typedChars].classList.add('inactive');
         textElements[typedChars + 1].classList.remove('inactive');
         textElements[typedChars + 1].classList.add('active');
@@ -283,12 +273,9 @@ function playFingerFight(event) {
             elapsedMin = Math.floor(diffMillisec / 60000);// Calculates elapsedMin from difffMillisec
             calculateStat();
         }
-
     }
 
     inputElement.oninput = getInputValue;
-
-
 }
 
 function setLogoInHeader() {
